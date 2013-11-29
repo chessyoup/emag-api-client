@@ -2,40 +2,60 @@ package com.flow.emag.api.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity
+@Table( name = "vouchers" )
 public class Voucher {
 	
-	/**
-	 * Senia ID ?
-	 */
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
 	@SerializedName("id")
-	private Integer id;
+	private Long id;
+	
+	@OneToOne
+	private Order order;
 	
 	/**
 	 * Emag ID ?
 	 */
+	@Column(name="voucher_emag_id")
 	@SerializedName("voucher_id")
 	private Integer emagVoucherId;
 	
+	@Column(name="sale_price_vat")
 	@SerializedName("sale_price_vat")
 	private BigDecimal salePriceVAT;
 			
+	@Column(name="sale_price")
 	@SerializedName("sale_price")
 	private BigDecimal salePrice;
 	
+	@Column(name="vat_rate")
 	@SerializedName("vat_rate")
 	private BigDecimal vatRate;
 	
 	/**
 	 * Ex: 2011-06-06 15:04:52
 	 */	
+	@Column
 	@SerializedName("created")
 	private String created;
 	
 	/**
 	 * Ex: 2011-06-06 15:04:52
 	 */
+	@Column
 	@SerializedName("modified")
 	private String modified;
 	
@@ -43,14 +63,15 @@ public class Voucher {
 	 * 0 disabled
 	 * 1 enabled ?
 	 */
+	@Column
 	@SerializedName("status")
 	private Integer status;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

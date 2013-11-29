@@ -56,7 +56,7 @@ public class ApiResponse<T> {
 	}
 
 	public static void main(String[] args) throws Exception{
-		BufferedReader r = new BufferedReader(new FileReader(new File("/home/leo/Desktop/product.json")));
+		BufferedReader r = new BufferedReader(new FileReader(new File("/home/leo/Desktop/Docs/product.json")));
 		String line = null;
 		StringBuffer json = new StringBuffer();
 		
@@ -69,6 +69,6 @@ public class ApiResponse<T> {
 		Type fooType = new TypeToken<ApiResponse<Product>>() {}.getType();
 		Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 		ApiResponse<Product> response =  gson.fromJson(json.toString(), fooType);
-		System.out.println(response.toString());		
+		System.out.println(response.getResults().get(0).getName());		
 	}
 }

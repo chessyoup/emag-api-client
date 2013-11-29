@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,157 +8,101 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 @Entity
 @Table( name = "customers" )
-@EmagResource(name="customer")
-public class Customer {
+public class CustomerEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
+	@GenericGenerator(name="increment", strategy = "increment")	
 	private Long id;	
 		
-	@Column(name="mkt_id")
-	@SerializedName("mkt_id")
-	@Expose
+	@Column(name="mkt_id")		
 	public Integer mktId;
 	
-	@Column
-	@SerializedName("name")
-	@Expose
+	@Column	
 	public String name;
 	
-	@Column
-	@SerializedName("company")
-	@Expose
+	@Column	
 	public String company;
 			
-	@Column
-	@SerializedName("gender")
-	@Expose
+	@Column	
 	public String gender;
 	
-	@Column
-	@SerializedName("phone_1")
-	@Expose
+	@Column	
 	public String phone_1;
 	
-	@Column
-	@SerializedName("phone_2")
-	@Expose
+	@Column	
 	public String phone_2;
 			
-	@Column
-	@SerializedName("phone_3")
-	@Expose
+	@Column	
 	public String phone_3;
 			
-	@Column(name="registration_number")
-	@SerializedName("registration_number")
-	@Expose
+	@Column(name="registration_number")	
 	public String registration_number;
 			
-	@Column
-	@SerializedName("code")	
-	@Expose
+	@Column	
 	public String code;
 	
-	@Column
-	@SerializedName("email")
-	@Expose
+	@Column	
 	public String email;
 	
-	@Column(name="billing_country")
-	@SerializedName("billing_country")
-	@Expose
+	@Column(name="billing_country")	
 	public String billingCountry;
 			
-	@Column(name="billing_suburb")
-	@SerializedName("billing_suburb")	
-	@Expose
+	@Column(name="billing_suburb")	
 	public String billingSuburb;
 			
-	@Column(name="billing_city")
-	@SerializedName("billing_city")
-	@Expose
+	@Column(name="billing_city")	
 	public String billingCity;
 	
-	@Column(name="billing_street")
-	@SerializedName("billing_street")
-	@Expose
+	@Column(name="billing_street")	
 	public String billingStreet;
 	
-	@Column(name="billing_postal_code")
-	@SerializedName("billing_postal_code")
-	@Expose
+	@Column(name="billing_postal_code")	
 	public String billingPostalCode;
 	
-	@Column(name="shipping_country")
-	@SerializedName("shipping_country")	
-	@Expose
+	@Column(name="shipping_country")	
 	public String shippingCountry;
 	
-	@Column(name="shipping_suburb")
-	@SerializedName("shipping_suburb")
-	@Expose
+	@Column(name="shipping_suburb")	
 	public String shippingSuburb;
 	
-	@Column(name="shipping_city")
-	@SerializedName("shipping_city")
-	@Expose
+	@Column(name="shipping_city")	
 	public String shippingCity;
 	
-	@Column(name="shipping_street")
-	@SerializedName("shipping_street")	
-	@Expose
+	@Column(name="shipping_street")	
 	public String shippingStreet;
 			
-	@Column(name="shipping_postal_code")
-	@SerializedName("shipping_postal_code")
-	@Expose
+	@Column(name="shipping_postal_code")	
 	public String shippingPostal_Code;		
 	
 	/**
 	 * Sample 2011-06-06 15:04:52
 	 */
-	@Column
-	@SerializedName("created")
-	@Expose
+	@Column	
 	public String created;
 	
 	/**
 	 * Sample 2011-06-06 15:04:52
 	 */
-	@SerializedName("created")	
-	@Column
-	@Expose
+	@Column		
 	public String modified;
 	
-	@SerializedName("bank")
-	@Expose
+	@Column	
 	public String bank;
 	
-	@Column
-	@SerializedName("iban")
-	@Expose
+	@Column	
 	public String iban;
 	
 	/**
 	 * 0 for persoana fizica
 	 * 1 for tpersoana juridica
 	 */
-	@Column(name="is_juridical")
-	@SerializedName("is_juridical")
-	@Expose
+	@Column(name="is_juridical")	
 	public Integer isJuridical;
 	
-	@Column
-	@SerializedName("fax")
-	@Expose
+	@Column	
 	public String fax;
 	
 	public Long getId() {
@@ -457,7 +401,7 @@ public class Customer {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Customer other = (Customer) obj;
+		CustomerEntity other = (CustomerEntity) obj;
 		if (bank == null) {
 			if (other.bank != null)
 				return false;

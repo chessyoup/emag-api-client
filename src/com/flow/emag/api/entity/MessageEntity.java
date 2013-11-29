@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,13 +8,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 @Entity
 @Table( name = "messages" )
-@EmagResource(name="message")
-public class Message {
+public class MessageEntity {
 	
 	/**
 	 * A value that uniquely identifies a message in the system.
@@ -22,53 +18,42 @@ public class Message {
 	 */
 	@Id
 	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
+	@GenericGenerator(name="increment", strategy = "increment")	
 	private Long id;
 	
 	/**
 	 * A value that uniquely identifies a message in the vendor system
 	 * Optional. Integer value between 1 and 4294967295
 	 */
-	@Column(name="ext_id")
-	@SerializedName("ext_id")	
-	@Expose
+	@Column(name="ext_id")	
 	private Integer seniaId;
 	
 	/**
 	 * An order id. If supplied, the messages are associated with the order identified by this value.
 	 * Optional. Integer value between 1 and 4294967295.
 	 */
-	@Column(name="order_id")
-	@SerializedName("order_id")
-	@Expose
+	@Column(name="order_id")	
 	private Integer orderId;
 		
 	/**
 	 * The message body
 	 * Required. String
 	 */
-	@Column(name="text")
-	@SerializedName("text")
-	@Expose
+	@Column(name="text")	
 	private String text;
 	
 	/**
 	 * The message date
 	 * Required. Text in YYYY-mm-dd HH:ii:ss format
 	 */
-	@Column(name="created")
-	@SerializedName("created")	
-	@Expose
+	@Column(name="created")	
 	private String dateCreated;
 	
 	/**
 	 * The name of the user that created the message.
 	 * Optional. Text
 	 */
-	@Column
-	@SerializedName("author")
-	@Expose
+	@Column	
 	private String author;
 	
 	/**
@@ -76,9 +61,7 @@ public class Message {
 	 * 2 - vendor ( Senia)
 	 *  Required.
 	 */
-	@Column
-	@SerializedName("source")
-	@Expose
+	@Column	
 	private Integer source;
 	
 	/**
@@ -87,8 +70,6 @@ public class Message {
 	 * Required. 
 	 */
 	@Column
-	@SerializedName("status")
-	@Expose
 	private Integer status;
 
 	public Long getId() {
@@ -179,7 +160,7 @@ public class Message {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Message other = (Message) obj;
+		MessageEntity other = (MessageEntity) obj;
 		if (author == null) {
 			if (other.author != null)
 				return false;

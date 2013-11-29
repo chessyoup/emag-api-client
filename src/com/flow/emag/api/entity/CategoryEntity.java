@@ -1,22 +1,35 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@EmagResource(name="category")
-public class Category {
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+@Table( name = "categories" )
+public class CategoryEntity {
 	
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
 	private Long id;	    
 	
-	@SerializedName("emag_id")	
+	@Column(name="emag_id")	
 	private String emagId;
 	
-	@SerializedName("name")
+	@Column
 	private String name;
-	
-	@SerializedName("characteristics")
-	private List<CategoryCharacteristic> characteristics;
+
+	@OneToMany(mappedBy="category",cascade = {CascadeType.ALL},fetch=FetchType.EAGER)	
+	private List<CategoryCharacteristicEntity> characteristics;
 
 	public String getName() {
 		return name;
@@ -42,11 +55,11 @@ public class Category {
 		this.name = name;
 	}
 
-	public List<CategoryCharacteristic> getCharacteristics() {
+	public List<CategoryCharacteristicEntity> getCharacteristics() {
 		return characteristics;
 	}
 
-	public void setCharacteristics(List<CategoryCharacteristic> characteristics) {
+	public void setCharacteristics(List<CategoryCharacteristicEntity> characteristics) {
 		this.characteristics = characteristics;
 	}
 
@@ -70,7 +83,7 @@ public class Category {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		CategoryEntity other = (CategoryEntity) obj;
 		if (characteristics == null) {
 			if (other.characteristics != null)
 				return false;

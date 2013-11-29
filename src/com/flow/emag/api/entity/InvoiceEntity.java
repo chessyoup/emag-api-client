@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,59 +12,43 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 @Entity
 @Table( name = "invoices" )
-public class Invoice {
+public class InvoiceEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
 	private Long id;		
 	
-	@Column
-	@SerializedName("series")
-	@Expose
+	@Column	
 	private String series;
 	
 	@Column
-	@SerializedName("number")
-	@Expose
 	private String number;
 	
 	/**
 	 * Ex: '2011-05-23 00:00:00
 	 */
 	@Column
-	@SerializedName("date")
-	@Expose
 	private String date; 
 	
 	/**
 	 * Ex: '2011-05-23 00:00:00
 	 */
 	@Column(name="due_date")
-	@SerializedName("due_date")
-	@Expose
 	private String dueDate;
 			
 	/**
 	 * Ex: value 173.9900
 	 */
 	@Column
-	@SerializedName("value")
-	@Expose
 	private BigDecimal value;
 	
 	/**
 	 * Ex: value 173.9900
 	 */
 	@Column(name="total_value")
-	@SerializedName("total_value")
-	@Expose
 	private BigDecimal totalValue;
 	
 	/**
@@ -72,14 +56,10 @@ public class Invoice {
 	 *  1 - true ?
 	 */
 	@Column(name="is_cancellation")
-	@SerializedName("is_cancellation")
-	@Expose
 	private Integer isCancellation;
 	
 	@OneToMany(mappedBy="invoice")
-	@SerializedName("products")
-	@Expose
-	private List<InvoiceItem> items;
+	private List<InvoiceItemEntity> items;
 
 	public Long getId() {
 		return id;
@@ -145,11 +125,11 @@ public class Invoice {
 		this.isCancellation = isCancellation;
 	}
 
-	public List<InvoiceItem> getProducts() {
+	public List<InvoiceItemEntity> getProducts() {
 		return items;
 	}
 
-	public void setProducts(List<InvoiceItem> products) {
+	public void setProducts(List<InvoiceItemEntity> products) {
 		this.items = products;
 	}
 
@@ -189,7 +169,7 @@ public class Invoice {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Invoice other = (Invoice) obj;
+		InvoiceEntity other = (InvoiceEntity) obj;
 		if (date == null) {
 			if (other.date != null)
 				return false;

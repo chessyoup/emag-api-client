@@ -1,34 +1,42 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.google.gson.annotations.SerializedName;
+import org.hibernate.annotations.GenericGenerator;
 
+@Entity
 @Table( name = "category_characteristics" )
-public class CategoryCharacteristic {
+public class CategoryCharacteristicEntity {
 	
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
 	private Long id;	    
 	
 	@OneToOne
-	private Category category;
+	private CategoryEntity category;
 	
 	/**
 	 * Characteristic eMAG id, Integer emag_id=4478
-	 */	
-	@SerializedName("emag_id")
+	 */
+	@Column(name="emag_id")	
 	private Integer emagId;
 
 	/**
 	 * Characteristic name , String name=”Tip produs”
 	 */
-	@SerializedName("name")
+	@Column	
 	private String name;
 
 	/**
 	 * Characteristic display order
-	 */
-	@SerializedName("display_order")	
+	 */	
+	@Column(name="display_order")	
 	private Integer displayOrder;
 
 	public Long getId() {
@@ -47,16 +55,16 @@ public class CategoryCharacteristic {
 		this.emagId = emagId;
 	}
 
-	public Category getCategory() {
+	public String getName() {
+		return name;
+	}
+
+	public CategoryEntity getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(CategoryEntity category) {
 		this.category = category;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public void setName(String name) {
@@ -97,7 +105,7 @@ public class CategoryCharacteristic {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoryCharacteristic other = (CategoryCharacteristic) obj;
+		CategoryCharacteristicEntity other = (CategoryCharacteristicEntity) obj;
 		if (displayOrder == null) {
 			if (other.displayOrder != null)
 				return false;

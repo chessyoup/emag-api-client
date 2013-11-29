@@ -1,31 +1,73 @@
 package com.flow.emag.api.model;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
 @EmagResource(name="offer")
 public class ProductOffer {
-	
+			
 	/**
 	 * Product eMAG id
 	 * Required. Integer value between 1 and 9999999
-	 */
+	 */	
 	@SerializedName("product_emag_id")
 	private Integer productEmagId;
 	
 	/**
 	 * Vendor internal product id (Senia product id)
-	 */
-	@SerializedName("id")
+	 */	
+	@SerializedName("id")	
 	private Integer vendorId;
+		
+	/**
+	 * Manufacturer unique identifier of the product
+	 */
+	@SerializedName("part_number")
+	public String number;
+	
+	/**
+	 * Product name
+	 */	
+	@SerializedName("name")	
+	public String name;
+	
+	/**
+	 * Product short description
+	 */
+	@SerializedName("short_description")	
+	public String shortDescription;
+	
+	/**
+	 * Product description
+	 */
+	@SerializedName("description")
+	public String description;
+	
+	/**
+	 * Product category
+	 */
+	@SerializedName("category_emag_id")
+	public Integer categoryId;
+	
+	/**
+	 * Product brand
+	 */
+	@SerializedName("brand")	
+	public Brand brand;
+		
+	@SerializedName("characteristics")	
+	public List<ProductsCharacteristic> characteristics;
+	
+	@SerializedName("images")	
+	public List<Image> images;
 	
 	/**
 	 * Delivery time id.
 	 * Required. Integer value between 0 and 65535
 	 * 1 – delivery in 1 day.
 	 * 2 – delivery in 2 days.
-	 */
+	 */	
 	@SerializedName("delivery_time_id")
 	private Integer deliveryTimeId;
 	
@@ -42,23 +84,23 @@ public class ProductOffer {
 	 * Vendor offer sale price without VAT
 	 * Required. Decimal value between 0 and 99999999999999
 	 * Ex: sale_price=51.64
-	 */
-	@SerializedName("sale_price")
-	private BigDecimal salePrice;
+	 */	
+	@SerializedName("sale_price")	
+	private String salePrice;
 	
 	/**
 	 * Vendor offer sale price before discount without VAT
-	 */
+	 */	
 	@SerializedName("original_sale_price")
-	private BigDecimal originalSalePrice;
+	private String originalSalePrice;
 	
 	/**
 	 * Vendor offer VAT rate
 	 * Optional. Default value 0.24. Decimal value between 0 and 1.
 	 * Ex vat_rate=0.09
-	 */
-	@SerializedName("vat_rate")
-	private BigDecimal vatRate;
+	 */	
+	@SerializedName("vat_rate")	
+	private String vatRate;
 	
 	/**
 	 * Vendor offer currency
@@ -78,195 +120,21 @@ public class ProductOffer {
 	 * 5 – not available 
 	 * 9 – available in 10 days 
 	 * Optional. Default value availability_id = 9
-	 */
-	@SerializedName("availability_id")
+	 */	
+	@SerializedName("availability_id")	
 	private Integer availabilityId; 
+	
+	@SerializedName("popularity")	
+	private Integer popularity;
 	
 	/**
 	 * Value represents the warranty in months.
 	 * 0 – no warranty
 	 * Integer between 0 and 255
 	 * Optional. Default warranty=24
-	 */
-	@SerializedName("warranty")
+	 */	
+	@SerializedName("warranty")	
 	private Integer warranty;
-
-	public Integer getProductEmagId() {
-		return productEmagId;
-	}
-
-	public void setProductEmagId(Integer productEmagId) {
-		this.productEmagId = productEmagId;
-	}
-
-	public Integer getVendorId() {
-		return vendorId;
-	}
-
-	public void setVendorId(Integer vendorId) {
-		this.vendorId = vendorId;
-	}
-
-	public Integer getDeliveryTimeId() {
-		return deliveryTimeId;
-	}
-
-	public void setDeliveryTimeId(Integer deliveryTimeId) {
-		this.deliveryTimeId = deliveryTimeId;
-	}
-
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public BigDecimal getSalePrice() {
-		return salePrice;
-	}
-
-	public void setSalePrice(BigDecimal salePrice) {
-		this.salePrice = salePrice;
-	}
-
-	public BigDecimal getOriginalSalePrice() {
-		return originalSalePrice;
-	}
-
-	public void setOriginalSalePrice(BigDecimal originalSalePrice) {
-		this.originalSalePrice = originalSalePrice;
-	}
-
-	public BigDecimal getVatRate() {
-		return vatRate;
-	}
-
-	public void setVatRate(BigDecimal vatRate) {
-		this.vatRate = vatRate;
-	}
-
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
-	public Integer getAvailabilityId() {
-		return availabilityId;
-	}
-
-	public void setAvailabilityId(Integer availabilityId) {
-		this.availabilityId = availabilityId;
-	}
-
-	public Integer getWarranty() {
-		return warranty;
-	}
-
-	public void setWarranty(Integer warranty) {
-		this.warranty = warranty;
-	}
-
-	@Override
-	public String toString() {
-		return "ProductOffer [productEmagId=" + productEmagId + ", vendorId="
-				+ vendorId + ", deliveryTimeId=" + deliveryTimeId + ", status="
-				+ status + ", salePrice=" + salePrice + ", originalSalePrice="
-				+ originalSalePrice + ", vatRate=" + vatRate + ", currency="
-				+ currency + ", availabilityId=" + availabilityId
-				+ ", warranty=" + warranty + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((availabilityId == null) ? 0 : availabilityId.hashCode());
-		result = prime * result
-				+ ((currency == null) ? 0 : currency.hashCode());
-		result = prime * result
-				+ ((deliveryTimeId == null) ? 0 : deliveryTimeId.hashCode());
-		result = prime
-				* result
-				+ ((originalSalePrice == null) ? 0 : originalSalePrice
-						.hashCode());
-		result = prime * result
-				+ ((productEmagId == null) ? 0 : productEmagId.hashCode());
-		result = prime * result
-				+ ((salePrice == null) ? 0 : salePrice.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((vatRate == null) ? 0 : vatRate.hashCode());
-		result = prime * result
-				+ ((vendorId == null) ? 0 : vendorId.hashCode());
-		result = prime * result
-				+ ((warranty == null) ? 0 : warranty.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ProductOffer other = (ProductOffer) obj;
-		if (availabilityId == null) {
-			if (other.availabilityId != null)
-				return false;
-		} else if (!availabilityId.equals(other.availabilityId))
-			return false;
-		if (currency == null) {
-			if (other.currency != null)
-				return false;
-		} else if (!currency.equals(other.currency))
-			return false;
-		if (deliveryTimeId == null) {
-			if (other.deliveryTimeId != null)
-				return false;
-		} else if (!deliveryTimeId.equals(other.deliveryTimeId))
-			return false;
-		if (originalSalePrice == null) {
-			if (other.originalSalePrice != null)
-				return false;
-		} else if (!originalSalePrice.equals(other.originalSalePrice))
-			return false;
-		if (productEmagId == null) {
-			if (other.productEmagId != null)
-				return false;
-		} else if (!productEmagId.equals(other.productEmagId))
-			return false;
-		if (salePrice == null) {
-			if (other.salePrice != null)
-				return false;
-		} else if (!salePrice.equals(other.salePrice))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		if (vatRate == null) {
-			if (other.vatRate != null)
-				return false;
-		} else if (!vatRate.equals(other.vatRate))
-			return false;
-		if (vendorId == null) {
-			if (other.vendorId != null)
-				return false;
-		} else if (!vendorId.equals(other.vendorId))
-			return false;
-		if (warranty == null) {
-			if (other.warranty != null)
-				return false;
-		} else if (!warranty.equals(other.warranty))
-			return false;
-		return true;
-	}
+	
+	
 }

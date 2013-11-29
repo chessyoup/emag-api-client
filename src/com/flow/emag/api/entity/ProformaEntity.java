@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,94 +13,65 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 @Entity
 @Table( name = "proforms" )
-public class Proforma {
+public class ProformaEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
 	private Long id;
 	
 	@OneToOne
-	private Order order;
+	private OrderEntity order;
 	
-	@Column(name="senia_order_id")
-	@SerializedName("vendor_order_id")
-	@Expose
+	@Column(name="senia_order_id")	
 	private Integer vendorOrderId;
 	
-	@Column(name="proforma_number")
-	@SerializedName("proforma_number")
-	@Expose
+	@Column(name="proforma_number")	
 	private Integer number;
 	
 	/**
 	 * Ex: 2011-07-18 15:44:02
 	 */
 	@Column
-	@SerializedName("created")
-	@Expose
 	private String created;
 	
 	/**
 	 * Ex: 2011-07-18 15:44:02
 	 */
 	@Column(name="date_expire")
-	@SerializedName("date_expire")
-	@Expose
 	private String date_expire;
 	
 	@Column
-	@SerializedName("value")
-	@Expose
 	private BigDecimal value;
 	
 	@Column(name="total_value")
-	@SerializedName("total_value")
-	@Expose
 	private BigDecimal totalValue;
 	
 	@Column
-	@SerializedName("status")
-	@Expose
 	private Integer status;
 			
 	@Column(name="is_payed")
-	@SerializedName("is_payed")
 	private Integer is_payed;
 	
 	/**
 	 * Ex: 2011-07-18 15:44:02
 	 */
 	@Column(name="modified")
-	@SerializedName("modified")
-	@Expose
 	private String modified;
 			
 	@Column(name="mkt_order_id")
-	@SerializedName("mkt_order_id")
-	@Expose
 	private Integer mktOrderId;
 	
 	@Column(name="vendor_name")
-	@SerializedName("vendor_name")
-	@Expose
 	private String vendorName;
 	
 	@Column(name="customer_name")
-	@SerializedName("customer_name")
-	@Expose
 	private String customerName;
 	
 	@OneToMany(mappedBy="proforma")
-	@SerializedName("products")
-	@Expose
-	private List<ProformaVendorItem> products;
+	private List<ProformaVendorItemEntity> products;
 
 	public Long getId() {
 		return id;
@@ -206,11 +177,11 @@ public class Proforma {
 		this.customerName = customerName;
 	}
 
-	public List<ProformaVendorItem> getProducts() {
+	public List<ProformaVendorItemEntity> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<ProformaVendorItem> products) {
+	public void setProducts(List<ProformaVendorItemEntity> products) {
 		this.products = products;
 	}
 
@@ -264,7 +235,7 @@ public class Proforma {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Proforma other = (Proforma) obj;
+		ProformaEntity other = (ProformaEntity) obj;
 		if (created == null) {
 			if (other.created != null)
 				return false;

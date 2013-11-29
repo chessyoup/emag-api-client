@@ -2,39 +2,71 @@ package com.flow.emag.api.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
+@Table( name = "proforma_items" )
 public class ProformaVendorItem {
 	
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
 	@SerializedName("id")
-	private Integer id;
+	private Long id;
 	
+	@OneToOne
+	private Proforma proforma;
+	
+	@Column(name="senia_proform_id")
 	@SerializedName("vendor_proform_id")
+	@Expose
 	private Integer proformId;
 	
+	@Column(name="senia_product_id")
 	@SerializedName("vendor_product_id")
+	@Expose
 	private Integer productId;
 	
+	@Column(name="senia_order_product_id")
 	@SerializedName("vendor_order_product_id")
+	@Expose
 	private Integer orderProductId;
 	
+	@Column(name="senia_product_name")
 	@SerializedName("vendor_product_ext_name")
+	@Expose
 	private String productName;
 	
+	@Column(name="senia_order_product_quantity")
 	@SerializedName("vendor_order_product_quantity")
+	@Expose
 	private Integer quantity;
 	
+	@Column(name="senia_order_product_sale_price")
 	@SerializedName("vendor_order_product_sale_price")
+	@Expose
 	private BigDecimal salePrice;
 	
+	@Column(name="senia_order_product_vat_rate")
 	@SerializedName("vendor_order_product_vat_rate")
+	@Expose
 	private BigDecimal vatRate;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

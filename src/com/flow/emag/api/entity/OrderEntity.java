@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,18 +13,13 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 @Entity
 @Table( name = "orders" )
-@EmagResource(name = "order")
-public class Order {
+public class OrderEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
 	private Long id;
 	
 	/**
@@ -32,8 +27,6 @@ public class Order {
 	 * between 1 and 4294967295.
 	 */
 	@Column(name="emag_id")
-	@SerializedName("id")
-	@Expose
 	private Long emagId;	
 	
 	/**
@@ -46,8 +39,6 @@ public class Order {
 	 * Required. Integer value between 0 and 5
 	 */
 	@Column
-	@SerializedName("status")
-	@Expose
 	private Integer status;
 	
 	/**
@@ -62,8 +53,6 @@ public class Order {
 	 *	Required. Integer.
 	 */
 	@Column(name="payment_mode_id")
-	@SerializedName("payment_mode_id")
-	@Expose
 	private Integer paymentMode;
 	
 	/**
@@ -71,8 +60,6 @@ public class Order {
 	 * Optional. Text
 	 */
 	@Column
-	@SerializedName("observation")
-	@Expose
 	private String observation;
 	
 	/**
@@ -80,8 +67,6 @@ public class Order {
 	 * Optional. Text in YYYY-mm-dd HH:ii:ss format.
 	 */
 	@Column
-	@SerializedName("date")
-	@Expose
 	private String date;
 	
 	/**
@@ -90,8 +75,6 @@ public class Order {
 	 * Required only for online payment methods.
 	 */
 	@Column(name="payment_status")
-	@SerializedName("payment_status")
-	@Expose
 	private Integer paymentStatus;
 	
 	/**
@@ -99,8 +82,6 @@ public class Order {
 	 * Optional. Decimal
 	 */
 	@Column(name="shipping_tax")
-	@SerializedName("shipping_tax")
-	@Expose
 	private BigDecimal shippingTax;
 	
 	/**
@@ -108,34 +89,26 @@ public class Order {
 	 * Optional. List
 	 */
 	@OneToMany(mappedBy="order")
-	@SerializedName("details")
-	@Expose
-	private List<OrderDetail> details;
+	private List<OrderDetailEntity> details;
 	
 	/**
 	 * A list with the details about the customer, the shipping and the billing addresses.
 	 * Optional. List.
 	 */
 	@OneToOne
-	@SerializedName("customer")
-	@Expose
-	private Customer customer;
+	private CustomerEntity customer;
 	
 	/**
 	 * A list describing the products in the order.
 	 */
 	@OneToMany(mappedBy="order")
-	@SerializedName("products")
-	@Expose
-	private List<OrderItem> orderItems;
+	private List<OrderItemEntity> orderItems;
 	
 	/**
 	 * A list describing the voucher discounts.
 	 */
 	@OneToMany(mappedBy="order")
-	@SerializedName("vouchers")
-	@Expose
-	private List<Voucher> vouchers;
+	private List<VoucherEntity> vouchers;
 	
 	/**
 	 * A list describing the proformas. 
@@ -143,25 +116,19 @@ public class Order {
 	 * Vendors may only read proformas
 	 */
 	@OneToMany(mappedBy="order")
-	@SerializedName("proforms")
-	@Expose
-	private List<Proforma> proforms;
+	private List<ProformaEntity> proforms;
 	
 	/**
 	 * The vendor shipping details. Vendors may only save shipping details.
 	 */
 	@OneToOne
-	@SerializedName("shipment")
-	@Expose
-	private Shipment shipment;
+	private ShipmentEntity shipment;
 	
 	/**
 	 * A list describing vendor invoice details. Vendors may only save invoice details.
 	 */
 	@OneToOne
-	@SerializedName("invoice")
-	@Expose
-	private Invoice invoice;
+	private InvoiceEntity invoice;
 
 	public Long getId() {
 		return id;
@@ -227,59 +194,59 @@ public class Order {
 		this.emagId = emagId;
 	}
 
-	public List<OrderDetail> getDetails() {
+	public List<OrderDetailEntity> getDetails() {
 		return details;
 	}
 
-	public void setDetails(List<OrderDetail> details) {
+	public void setDetails(List<OrderDetailEntity> details) {
 		this.details = details;
 	}
 
-	public Customer getCustomer() {
+	public CustomerEntity getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(CustomerEntity customer) {
 		this.customer = customer;
 	}
 
-	public List<OrderItem> getOrderItems() {
+	public List<OrderItemEntity> getOrderItems() {
 		return orderItems;
 	}
 
-	public void setOrderItems(List<OrderItem> orderItems) {
+	public void setOrderItems(List<OrderItemEntity> orderItems) {
 		this.orderItems = orderItems;
 	}
 
-	public List<Voucher> getVouchers() {
+	public List<VoucherEntity> getVouchers() {
 		return vouchers;
 	}
 
-	public void setVouchers(List<Voucher> vouchers) {
+	public void setVouchers(List<VoucherEntity> vouchers) {
 		this.vouchers = vouchers;
 	}
 
-	public List<Proforma> getProforms() {
+	public List<ProformaEntity> getProforms() {
 		return proforms;
 	}
 
-	public void setProforms(List<Proforma> proforms) {
+	public void setProforms(List<ProformaEntity> proforms) {
 		this.proforms = proforms;
 	}
 
-	public Shipment getShipment() {
+	public ShipmentEntity getShipment() {
 		return shipment;
 	}
 
-	public void setShipment(Shipment shipment) {
+	public void setShipment(ShipmentEntity shipment) {
 		this.shipment = shipment;
 	}
 
-	public Invoice getInvoice() {
+	public InvoiceEntity getInvoice() {
 		return invoice;
 	}
 
-	public void setInvoice(Invoice invoice) {
+	public void setInvoice(InvoiceEntity invoice) {
 		this.invoice = invoice;
 	}
 
@@ -332,7 +299,7 @@ public class Order {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		OrderEntity other = (OrderEntity) obj;
 		if (customer == null) {
 			if (other.customer != null)
 				return false;

@@ -5,20 +5,17 @@ import com.google.gson.annotations.SerializedName;
 @EmagResource(name="brand")
 public class Brand {
 	
-	@SerializedName("emag_id")	
-	public Integer id;
+	private Long id;	    
 	
-	@SerializedName("name")	
+	@SerializedName("emag_id")
+	public Integer emagId;
+	
+	@SerializedName("name")
 	public String name;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	
+	@SerializedName("url")
+	public String url;
+	
 	public String getName() {
 		return name;
 	}
@@ -26,18 +23,23 @@ public class Brand {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getUrl() {
+		return url;
+	}
 
-	@Override
-	public String toString() {
-		return "Brand [id=" + id + ", name=" + name + "]";
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((emagId == null) ? 0 : emagId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
 		return result;
 	}
 
@@ -50,6 +52,11 @@ public class Brand {
 		if (getClass() != obj.getClass())
 			return false;
 		Brand other = (Brand) obj;
+		if (emagId == null) {
+			if (other.emagId != null)
+				return false;
+		} else if (!emagId.equals(other.emagId))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -60,6 +67,33 @@ public class Brand {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (url == null) {
+			if (other.url != null)
+				return false;
+		} else if (!url.equals(other.url))
+			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Brand [id=" + id + ", emagId=" + emagId + ", name=" + name
+				+ ", url=" + url + "]";
+	}
+
+	public Integer getEmagId() {
+		return emagId;
+	}
+
+	public void setEmagId(Integer emagId) {
+		this.emagId = emagId;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

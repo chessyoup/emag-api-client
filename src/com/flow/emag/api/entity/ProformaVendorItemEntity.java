@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import java.math.BigDecimal;
 
@@ -11,69 +11,38 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 @Entity
-@Table( name = "invoice_items" )
-public class InvoiceItem {
+@Table( name = "proforma_items" )
+public class ProformaVendorItemEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
-	private Long id;		
+	private Long id;
 	
 	@OneToOne
-	private Invoice invoice;
+	private ProformaEntity proforma;
 	
-	/**
-	 * Emag product id
-	 */
-	@Column(name="product_id")
-	@SerializedName("product_id")
-	@Expose
+	@Column(name="senia_proform_id")
+	private Integer proformId;
+	
+	@Column(name="senia_product_id")
 	private Integer productId;
 	
-	@Column
-	@SerializedName("quantity")
-	@Expose
-	private Integer quantity;
+	@Column(name="senia_order_product_id")
+	private Integer orderProductId;
 	
-	/**
-	 * Ex : 119.9935
-	 */
-	@Column(name="sale_price")
-	@SerializedName("sale_price")
-	@Expose
-	private BigDecimal salePrice;
-	
-	@Column(name="vat_rate")
-	@SerializedName("vat_rate")
-	@Expose
-	private BigDecimal vatRate;
-	
-	/**
-	 * ProductName
-	 */
-	@Column
-	@SerializedName("name")
-	@Expose
+	@Column(name="senia_product_name")
 	private String productName;
 	
-	@Column(name="part_number")
-	@SerializedName("part_number")
-	@Expose
-	private String partNumber;
+	@Column(name="senia_order_product_quantity")
+	private Integer quantity;
 	
-	/**
-	 * Ex: 62.1200
-	 */
-	@Column
-	@SerializedName("cost")
-	@Expose
-	private BigDecimal cost;
-
+	@Column(name="senia_order_product_sale_price")
+	private BigDecimal salePrice;
+	
+	@Column(name="senia_order_product_vat_rate")
+	private BigDecimal vatRate;
 
 	public Long getId() {
 		return id;
@@ -83,12 +52,36 @@ public class InvoiceItem {
 		this.id = id;
 	}
 
+	public Integer getProformId() {
+		return proformId;
+	}
+
+	public void setProformId(Integer proformId) {
+		this.proformId = proformId;
+	}
+
 	public Integer getProductId() {
 		return productId;
 	}
 
 	public void setProductId(Integer productId) {
 		this.productId = productId;
+	}
+
+	public Integer getOrderProductId() {
+		return orderProductId;
+	}
+
+	public void setOrderProductId(Integer orderProductId) {
+		this.orderProductId = orderProductId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public Integer getQuantity() {
@@ -115,42 +108,28 @@ public class InvoiceItem {
 		this.vatRate = vatRate;
 	}
 
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public String getPartNumber() {
-		return partNumber;
-	}
-
-	public void setPartNumber(String partNumber) {
-		this.partNumber = partNumber;
-	}
-
-	public BigDecimal getCost() {
-		return cost;
-	}
-
-	public void setCost(BigDecimal cost) {
-		this.cost = cost;
+	@Override
+	public String toString() {
+		return "ProformaVendorItem [id=" + id + ", proformId=" + proformId
+				+ ", productId=" + productId + ", orderProductId="
+				+ orderProductId + ", productName=" + productName
+				+ ", quantity=" + quantity + ", salePrice=" + salePrice
+				+ ", vatRate=" + vatRate + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cost == null) ? 0 : cost.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
-				+ ((partNumber == null) ? 0 : partNumber.hashCode());
+				+ ((orderProductId == null) ? 0 : orderProductId.hashCode());
 		result = prime * result
 				+ ((productId == null) ? 0 : productId.hashCode());
 		result = prime * result
 				+ ((productName == null) ? 0 : productName.hashCode());
+		result = prime * result
+				+ ((proformId == null) ? 0 : proformId.hashCode());
 		result = prime * result
 				+ ((quantity == null) ? 0 : quantity.hashCode());
 		result = prime * result
@@ -167,21 +146,16 @@ public class InvoiceItem {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		InvoiceItem other = (InvoiceItem) obj;
-		if (cost == null) {
-			if (other.cost != null)
-				return false;
-		} else if (!cost.equals(other.cost))
-			return false;
+		ProformaVendorItemEntity other = (ProformaVendorItemEntity) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (partNumber == null) {
-			if (other.partNumber != null)
+		if (orderProductId == null) {
+			if (other.orderProductId != null)
 				return false;
-		} else if (!partNumber.equals(other.partNumber))
+		} else if (!orderProductId.equals(other.orderProductId))
 			return false;
 		if (productId == null) {
 			if (other.productId != null)
@@ -192,6 +166,11 @@ public class InvoiceItem {
 			if (other.productName != null)
 				return false;
 		} else if (!productName.equals(other.productName))
+			return false;
+		if (proformId == null) {
+			if (other.proformId != null)
+				return false;
+		} else if (!proformId.equals(other.proformId))
 			return false;
 		if (quantity == null) {
 			if (other.quantity != null)
@@ -209,13 +188,5 @@ public class InvoiceItem {
 		} else if (!vatRate.equals(other.vatRate))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "InvoiceItem [id=" + id + ", productId=" + productId
-				+ ", quantity=" + quantity + ", salePrice=" + salePrice
-				+ ", vatRate=" + vatRate + ", productName=" + productName
-				+ ", partNumber=" + partNumber + ", cost=" + cost + "]";
 	}
 }

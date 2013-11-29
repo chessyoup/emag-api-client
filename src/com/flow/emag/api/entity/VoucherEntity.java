@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import java.math.BigDecimal;
 
@@ -11,68 +11,50 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 @Entity
-@Table( name = "order_items" )
-public class OrderItem {
+@Table( name = "vouchers" )
+public class VoucherEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
 	private Long id;
 	
 	@OneToOne
-	private Order order;
+	private OrderEntity order;
 	
 	/**
-	 * Products emag id ?
+	 * Emag ID ?
 	 */
-	@Column(name="product_id")
-	@SerializedName("product_emag_id")
-	@Expose
-	private Integer productEmagId;
+	@Column(name="voucher_emag_id")
+	private Integer emagVoucherId;
 	
-	@Column
-	@SerializedName("quantity")
-	@Expose
-	private Integer quantity;
-	
+	@Column(name="sale_price_vat")
+	private BigDecimal salePriceVAT;
+			
 	@Column(name="sale_price")
-	@SerializedName("sale_price")
-	@Expose
 	private BigDecimal salePrice;
 	
 	@Column(name="vat_rate")
-	@SerializedName("vat_rate")
-	@Expose
 	private BigDecimal vatRate;
 	
 	/**
 	 * Ex: 2011-06-06 15:04:52
-	 */
+	 */	
 	@Column
-	@SerializedName("created")
-	@Expose
 	private String created;
 	
 	/**
 	 * Ex: 2011-06-06 15:04:52
 	 */
 	@Column
-	@SerializedName("modified")
-	@Expose
 	private String modified;
-			
+	
 	/**
-	 * Order status
-	 * 1 - for OK ?
+	 * 0 disabled
+	 * 1 enabled ?
 	 */
 	@Column
-	@SerializedName("status")
-	@Expose
 	private Integer status;
 
 	public Long getId() {
@@ -83,20 +65,20 @@ public class OrderItem {
 		this.id = id;
 	}
 
-	public Integer getProductEmagId() {
-		return productEmagId;
+	public Integer getEmagVoucherId() {
+		return emagVoucherId;
 	}
 
-	public void setProductEmagId(Integer productEmagId) {
-		this.productEmagId = productEmagId;
+	public void setEmagVoucherId(Integer emagVoucherId) {
+		this.emagVoucherId = emagVoucherId;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
+	public BigDecimal getSalePriceVAT() {
+		return salePriceVAT;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setSalePriceVAT(BigDecimal salePriceVAT) {
+		this.salePriceVAT = salePriceVAT;
 	}
 
 	public BigDecimal getSalePrice() {
@@ -138,29 +120,21 @@ public class OrderItem {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
+		result = prime * result
+				+ ((emagVoucherId == null) ? 0 : emagVoucherId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((modified == null) ? 0 : modified.hashCode());
 		result = prime * result
-				+ ((productEmagId == null) ? 0 : productEmagId.hashCode());
-		result = prime * result
-				+ ((quantity == null) ? 0 : quantity.hashCode());
-		result = prime * result
 				+ ((salePrice == null) ? 0 : salePrice.hashCode());
+		result = prime * result
+				+ ((salePriceVAT == null) ? 0 : salePriceVAT.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((vatRate == null) ? 0 : vatRate.hashCode());
 		return result;
@@ -174,11 +148,16 @@ public class OrderItem {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrderItem other = (OrderItem) obj;
+		VoucherEntity other = (VoucherEntity) obj;
 		if (created == null) {
 			if (other.created != null)
 				return false;
 		} else if (!created.equals(other.created))
+			return false;
+		if (emagVoucherId == null) {
+			if (other.emagVoucherId != null)
+				return false;
+		} else if (!emagVoucherId.equals(other.emagVoucherId))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -190,20 +169,15 @@ public class OrderItem {
 				return false;
 		} else if (!modified.equals(other.modified))
 			return false;
-		if (productEmagId == null) {
-			if (other.productEmagId != null)
-				return false;
-		} else if (!productEmagId.equals(other.productEmagId))
-			return false;
-		if (quantity == null) {
-			if (other.quantity != null)
-				return false;
-		} else if (!quantity.equals(other.quantity))
-			return false;
 		if (salePrice == null) {
 			if (other.salePrice != null)
 				return false;
 		} else if (!salePrice.equals(other.salePrice))
+			return false;
+		if (salePriceVAT == null) {
+			if (other.salePriceVAT != null)
+				return false;
+		} else if (!salePriceVAT.equals(other.salePriceVAT))
 			return false;
 		if (status == null) {
 			if (other.status != null)
@@ -220,9 +194,9 @@ public class OrderItem {
 
 	@Override
 	public String toString() {
-		return "OrderItem [id=" + id + ", productEmagId=" + productEmagId
-				+ ", quantity=" + quantity + ", salePrice=" + salePrice
+		return "Voucher [id=" + id + ", emagVoucherId=" + emagVoucherId
+				+ ", salePriceVAT=" + salePriceVAT + ", salePrice=" + salePrice
 				+ ", vatRate=" + vatRate + ", created=" + created
 				+ ", modified=" + modified + ", status=" + status + "]";
-	}			
-}	
+	}
+}

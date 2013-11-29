@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,24 +8,19 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.google.gson.annotations.SerializedName;
-
 @Entity
 @Table( name = "shipments" )
-public class Shipment {
+public class ShipmentEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
 	private Long id;
 	
 	@Column(name="awb_number")
-	@SerializedName("awb_number")
 	private String awb_number;
 	
 	@Column
-	@SerializedName("date")
 	private String date;
 
 	public Long getId() {
@@ -77,7 +72,7 @@ public class Shipment {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Shipment other = (Shipment) obj;
+		ShipmentEntity other = (ShipmentEntity) obj;
 		if (awb_number == null) {
 			if (other.awb_number != null)
 				return false;

@@ -1,35 +1,31 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
-import com.google.gson.annotations.SerializedName;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class ProductsCharacteristic {
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+@Table( name = "brands" )
+public class BrandEntity {
 	
-	@SerializedName("id")
-	private Long id;
-		
-	/**
-	 * Product characteristic eMAG id,  Integer emag_id=4478
-	 */	
-	@SerializedName("emag_id")
-	private Integer emagId;
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	private Long id;	    
 	
-	/**
-	 * Product characteristic name , String name=”Tip produs”
-	 */
-	@SerializedName("name")
-	private String name;
-		
-	@SerializedName("characteristic_value")
-	private String value;
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
+	@Column(name="emag_id")	
+	public Integer emagId;
+	
+	@Column	
+	public String name;
+	
+	@Column	
+	public String url;
+	
 	public String getName() {
 		return name;
 	}
@@ -54,10 +50,18 @@ public class ProductsCharacteristic {
 		this.emagId = emagId;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	@Override
 	public String toString() {
-		return "ProductsCharacteristic [id=" + id + ", emagId=" + emagId
-				+ ", name=" + name + ", value=" + value + "]";
+		return "BrandEntity [id=" + id + ", emagId=" + emagId + ", name="
+				+ name + ", url=" + url + "]";
 	}
 
 	@Override
@@ -67,7 +71,7 @@ public class ProductsCharacteristic {
 		result = prime * result + ((emagId == null) ? 0 : emagId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
 		return result;
 	}
 
@@ -79,7 +83,7 @@ public class ProductsCharacteristic {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProductsCharacteristic other = (ProductsCharacteristic) obj;
+		BrandEntity other = (BrandEntity) obj;
 		if (emagId == null) {
 			if (other.emagId != null)
 				return false;
@@ -95,11 +99,11 @@ public class ProductsCharacteristic {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (value == null) {
-			if (other.value != null)
+		if (url == null) {
+			if (other.url != null)
 				return false;
-		} else if (!value.equals(other.value))
+		} else if (!url.equals(other.url))
 			return false;
 		return true;
-	}
+	}	
 }

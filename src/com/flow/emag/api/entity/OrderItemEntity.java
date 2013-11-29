@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import java.math.BigDecimal;
 
@@ -11,59 +11,43 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 @Entity
 @Table( name = "order_items" )
-public class OrderItem {
+public class OrderItemEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
 	private Long id;
 	
 	@OneToOne
-	private Order order;
+	private OrderEntity order;
 	
 	/**
 	 * Products emag id ?
 	 */
-	@Column(name="product_id")
-	@SerializedName("product_emag_id")
-	@Expose
+	@Column(name="product_id")	
 	private Integer productEmagId;
 	
 	@Column
-	@SerializedName("quantity")
-	@Expose
 	private Integer quantity;
 	
 	@Column(name="sale_price")
-	@SerializedName("sale_price")
-	@Expose
 	private BigDecimal salePrice;
 	
 	@Column(name="vat_rate")
-	@SerializedName("vat_rate")
-	@Expose
 	private BigDecimal vatRate;
 	
 	/**
 	 * Ex: 2011-06-06 15:04:52
 	 */
 	@Column
-	@SerializedName("created")
-	@Expose
 	private String created;
 	
 	/**
 	 * Ex: 2011-06-06 15:04:52
 	 */
 	@Column
-	@SerializedName("modified")
-	@Expose
 	private String modified;
 			
 	/**
@@ -71,8 +55,6 @@ public class OrderItem {
 	 * 1 - for OK ?
 	 */
 	@Column
-	@SerializedName("status")
-	@Expose
 	private Integer status;
 
 	public Long getId() {
@@ -139,11 +121,11 @@ public class OrderItem {
 		this.status = status;
 	}
 	
-	public Order getOrder() {
+	public OrderEntity getOrder() {
 		return order;
 	}
 
-	public void setOrder(Order order) {
+	public void setOrder(OrderEntity order) {
 		this.order = order;
 	}
 
@@ -174,7 +156,7 @@ public class OrderItem {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrderItem other = (OrderItem) obj;
+		OrderItemEntity other = (OrderItemEntity) obj;
 		if (created == null) {
 			if (other.created != null)
 				return false;

@@ -1,4 +1,4 @@
-package com.flow.emag.api.model;
+package com.flow.emag.api.entity;
 
 import java.math.BigDecimal;
 
@@ -15,65 +15,50 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
-@Table( name = "order_items" )
-public class OrderItem {
+@Table( name = "invoice_items" )
+public class InvoiceItemEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
-	private Long id;
+	private Long id;		
 	
 	@OneToOne
-	private Order order;
+	private InvoiceEntity invoice;
 	
 	/**
-	 * Products emag id ?
+	 * Emag product id
 	 */
-	@Column(name="product_id")
-	@SerializedName("product_emag_id")
-	@Expose
-	private Integer productEmagId;
+	@Column(name="product_id")	
+	private Integer productId;
 	
-	@Column
-	@SerializedName("quantity")
-	@Expose
+	@Column	
 	private Integer quantity;
 	
+	/**
+	 * Ex : 119.9935
+	 */
 	@Column(name="sale_price")
-	@SerializedName("sale_price")
-	@Expose
 	private BigDecimal salePrice;
 	
 	@Column(name="vat_rate")
-	@SerializedName("vat_rate")
-	@Expose
 	private BigDecimal vatRate;
 	
 	/**
-	 * Ex: 2011-06-06 15:04:52
+	 * ProductName
 	 */
 	@Column
-	@SerializedName("created")
-	@Expose
-	private String created;
+	private String productName;
+	
+	@Column(name="part_number")
+	private String partNumber;
 	
 	/**
-	 * Ex: 2011-06-06 15:04:52
+	 * Ex: 62.1200
 	 */
 	@Column
-	@SerializedName("modified")
-	@Expose
-	private String modified;
-			
-	/**
-	 * Order status
-	 * 1 - for OK ?
-	 */
-	@Column
-	@SerializedName("status")
-	@Expose
-	private Integer status;
+	private BigDecimal cost;
+
 
 	public Long getId() {
 		return id;
@@ -83,12 +68,12 @@ public class OrderItem {
 		this.id = id;
 	}
 
-	public Integer getProductEmagId() {
-		return productEmagId;
+	public Integer getProductId() {
+		return productId;
 	}
 
-	public void setProductEmagId(Integer productEmagId) {
-		this.productEmagId = productEmagId;
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 
 	public Integer getQuantity() {
@@ -115,53 +100,46 @@ public class OrderItem {
 		this.vatRate = vatRate;
 	}
 
-	public String getCreated() {
-		return created;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setCreated(String created) {
-		this.created = created;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
-	public String getModified() {
-		return modified;
+	public String getPartNumber() {
+		return partNumber;
 	}
 
-	public void setModified(String modified) {
-		this.modified = modified;
+	public void setPartNumber(String partNumber) {
+		this.partNumber = partNumber;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public BigDecimal getCost() {
+		return cost;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-	
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setCost(BigDecimal cost) {
+		this.cost = cost;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((created == null) ? 0 : created.hashCode());
+		result = prime * result + ((cost == null) ? 0 : cost.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
-				+ ((modified == null) ? 0 : modified.hashCode());
+				+ ((partNumber == null) ? 0 : partNumber.hashCode());
 		result = prime * result
-				+ ((productEmagId == null) ? 0 : productEmagId.hashCode());
+				+ ((productId == null) ? 0 : productId.hashCode());
+		result = prime * result
+				+ ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result
 				+ ((quantity == null) ? 0 : quantity.hashCode());
 		result = prime * result
 				+ ((salePrice == null) ? 0 : salePrice.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((vatRate == null) ? 0 : vatRate.hashCode());
 		return result;
 	}
@@ -174,26 +152,31 @@ public class OrderItem {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrderItem other = (OrderItem) obj;
-		if (created == null) {
-			if (other.created != null)
+		InvoiceItemEntity other = (InvoiceItemEntity) obj;
+		if (cost == null) {
+			if (other.cost != null)
 				return false;
-		} else if (!created.equals(other.created))
+		} else if (!cost.equals(other.cost))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (modified == null) {
-			if (other.modified != null)
+		if (partNumber == null) {
+			if (other.partNumber != null)
 				return false;
-		} else if (!modified.equals(other.modified))
+		} else if (!partNumber.equals(other.partNumber))
 			return false;
-		if (productEmagId == null) {
-			if (other.productEmagId != null)
+		if (productId == null) {
+			if (other.productId != null)
 				return false;
-		} else if (!productEmagId.equals(other.productEmagId))
+		} else if (!productId.equals(other.productId))
+			return false;
+		if (productName == null) {
+			if (other.productName != null)
+				return false;
+		} else if (!productName.equals(other.productName))
 			return false;
 		if (quantity == null) {
 			if (other.quantity != null)
@@ -205,11 +188,6 @@ public class OrderItem {
 				return false;
 		} else if (!salePrice.equals(other.salePrice))
 			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
 		if (vatRate == null) {
 			if (other.vatRate != null)
 				return false;
@@ -220,9 +198,9 @@ public class OrderItem {
 
 	@Override
 	public String toString() {
-		return "OrderItem [id=" + id + ", productEmagId=" + productEmagId
+		return "InvoiceItem [id=" + id + ", productId=" + productId
 				+ ", quantity=" + quantity + ", salePrice=" + salePrice
-				+ ", vatRate=" + vatRate + ", created=" + created
-				+ ", modified=" + modified + ", status=" + status + "]";
-	}			
-}	
+				+ ", vatRate=" + vatRate + ", productName=" + productName
+				+ ", partNumber=" + partNumber + ", cost=" + cost + "]";
+	}
+}
